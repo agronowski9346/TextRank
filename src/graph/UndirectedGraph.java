@@ -9,11 +9,11 @@ import java.util.LinkedList;
  */
 public class UndirectedGraph<T> {
 	private int[][] adjacencyMatrix;
-	private HashMap<Integer, String> vertices;
+	private HashMap<Integer, Vertex> vertices;
 	
 	public UndirectedGraph(int size) {
 		adjacencyMatrix = new int[size][size];
-		vertices = new HashMap<Integer, String>();
+		vertices = new HashMap<Integer, Vertex>();
 	}
 	
 	//adds an edge between two vertices
