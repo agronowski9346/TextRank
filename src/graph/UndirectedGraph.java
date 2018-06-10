@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * Class represents a generic undirected graph using an adjacency matrix
  * 
  */
-public class UndirectedGraph<T> {
+public class UndirectedGraph {
 	private int[][] adjacencyMatrix;
 	private HashMap<Integer, Vertex> vertices;
 	
