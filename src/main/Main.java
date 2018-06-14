@@ -20,8 +20,6 @@ public class Main {
 				fileContents.append(br.readLine());
 			}
 			ProcessText text = new ProcessText(fileContents.toString());
-			text.POStag();
-			//text.print();
 		} catch (FileNotFoundException e) {
 			System.out.println("no file found");
 		} catch (IOException e) {

@@ -8,8 +8,8 @@ import java.util.LinkedList;
  * 
  */
 public class UndirectedGraph {
-	private int[][] adjacencyMatrix;
-	private HashMap<Integer, Vertex> vertices;
+	protected int[][] adjacencyMatrix;
+	protected HashMap<Integer, Vertex> vertices;
 	
 	public UndirectedGraph(int size) {
 		adjacencyMatrix = new int[size][size];
