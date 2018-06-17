@@ -41,10 +41,10 @@ public class Main {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-		
 		ProcessText text = new ProcessText(fileContents.toString());
 		KeywordGraph keywordGraph = new KeywordGraph(text);
 		keywordGraph.drawEdges();
+		keywordGraph.printHashMap();
 		
 		
 	}

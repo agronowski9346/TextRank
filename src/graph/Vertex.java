@@ -18,5 +18,15 @@ public class Vertex {
 	public void setText(String text) {
 		this.value = text;
 	}
-
+	
+	//methods defined for checking in the hashmap for values
+	@Override
+	public boolean equals(Object o) {
+		Vertex vertex = (Vertex)o;
+		return this.getText().equalsIgnoreCase(vertex.getText());
+	}
+	@Override
+	public int hashCode() {
+		return this.getText().length();
+	}
 }

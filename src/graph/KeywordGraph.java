@@ -2,6 +2,8 @@ package graph;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+
 import process.ProcessText;
 
 /*
@@ -14,11 +16,7 @@ public class KeywordGraph extends UndirectedGraph {
 	private ProcessText text;
 	public KeywordGraph(ProcessText text) {
 		super();
-		int graphSize = this.createNodes();
 		this.text = text;
-		this.adjacencyMatrix = new int[graphSize][graphSize];
-		//Put the valid syntactic filters for TextRank(only nouns and adjectives)
-		// using Open NLP's part of speech codes
 		syntacticFilter.add("JJ");
 		syntacticFilter.add("JJR");
 		syntacticFilter.add("JJS");
@@ -26,27 +24,37 @@ public class KeywordGraph extends UndirectedGraph {
 		syntacticFilter.add("NNS");
 		syntacticFilter.add("NNP");
 		syntacticFilter.add("NNPS");
+		int graphSize = this.createVertices();
+		this.adjacencyMatrix = new int[graphSize][graphSize];
+		//Put the valid syntactic filters for TextRank(only nouns and adjectives)
+		// using Open NLP's part of speech codes
+	
 		
 	}
-	
-	private int createNodes() {
+	/*
+	 * Create all of the vertices to be added to 
+	 */
+	private int createVertices() {
 		String[] words = this.text.getTokenizedText();
 		String[] tags = this.text.getPosTags();
 		int currentNumberOfNodes = 0;
 		Vertex textNode = null;
 		for (int wordPos = 0; wordPos<words.length; wordPos++) {
-			for (int searchWords = 0+wordPos; searchWords <= CO_OCCURANCE_SIZE+wordPos; searchWords++) {
-				if(searchWords >= words.length) break; 
-				if(syntacticFilter.contains(tags[searchWords])) {
-					textNode = new Vertex(tags[searchWords]);
+				if(this.syntacticFilter.contains(tags[wordPos])) {
+					textNode = new Vertex(words[wordPos]);
 					if(!vertices.containsKey(textNode)) {
 						vertices.put(textNode, currentNumberOfNodes);
 						currentNumberOfNodes++;
-					}
 				}
 			}
 		}
 		return currentNumberOfNodes;
+	}
+	
+	public void printHashMap() {
+		for(Map.Entry<Vertex, Integer> m: vertices.entrySet()) {
+			System.out.println("Node: " + m.getKey().getText() + " has value: " + m.getValue());
+		}
 	}
 	
 	/*
@@ -60,11 +68,9 @@ public class KeywordGraph extends UndirectedGraph {
 			for (int searchWords = 0+wordPos; searchWords <= CO_OCCURANCE_SIZE+wordPos; searchWords++) {
 				if(searchWords >= words.length) break; 
 				if(syntacticFilter.contains(tags[searchWords])) {
-					if(!vertices.containsKey(words[searchWords])) {
-						Vertex textNode = new Vertex(tags[searchWords]);
-						vertices.put(textNode, value)
-					}
 					System.out.println(words[searchWords]);
+					//draw an edge between nodes
+					
 				}
 			}
 			System.out.println("next...");
@@ -72,5 +78,7 @@ public class KeywordGraph extends UndirectedGraph {
 		
 	
 		}
+	
+	
 	}
 
