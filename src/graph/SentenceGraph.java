@@ -5,8 +5,8 @@ package graph;
  */
 public class SentenceGraph extends UndirectedGraph {
 
-	public SentenceGraph(int size) {
-		super(size);
+	public SentenceGraph() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	
