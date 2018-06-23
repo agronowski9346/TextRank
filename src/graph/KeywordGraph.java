@@ -63,17 +63,34 @@ public class KeywordGraph extends UndirectedGraph {
 	public void drawEdges() {
 		String[] words = this.text.getTokenizedText();
 		String[] tags = this.text.getPosTags();
-		
+		Vertex inner = null;
+		Vertex outer = null;
+		LinkedList<String> wordsToBeConnected = new LinkedList<String>();
+		//determines which words pass the syntactic filter
 		for (int wordPos = 0; wordPos<words.length; wordPos++) {
-			for (int searchWords = 0+wordPos; searchWords <= CO_OCCURANCE_SIZE+wordPos; searchWords++) {
+			for (int searchWords = 0+wordPos; searchWords <= this.CO_OCCURANCE_SIZE+wordPos; searchWords++) {
 				if(searchWords >= words.length) break; 
-				if(syntacticFilter.contains(tags[searchWords])) {
-					System.out.println(words[searchWords]);
-					//draw an edge between nodes
-					
+				if(this.syntacticFilter.contains(tags[searchWords])) {
+					wordsToBeConnected.add(words[searchWords]);
+				}
+			}
+			//draw an edge between all the nodes in the list after they pass the filter
+			if((!wordsToBeConnected.isEmpty()) && (wordsToBeConnected.size() != 1)) {
+				for(int i = 0; i<wordsToBeConnected.size(); i++) {
+					inner = new Vertex(wordsToBeConnected.get(i));
+					for(int j = 0; j<wordsToBeConnected.size(); j++) {
+						outer = new Vertex(wordsToBeConnected.get(j));
+						//check if they are the same word to avoid loops
+						if(!(inner.getText().equals(outer.getText()))) {
+							System.out.println("Drawing an edge from " + this.vertices.get(inner) + " to " + this.vertices.get(outer));
+							System.out.println(" or in word terms we draw an edge from " + wordsToBeConnected.get(i) + " to " + wordsToBeConnected.get(j));
+							this.addEdge(this.vertices.get(inner), this.vertices.get(outer));
+						}
+					}
 				}
 			}
 			System.out.println("next...");
+			wordsToBeConnected.clear();
 		}
 		
 	
