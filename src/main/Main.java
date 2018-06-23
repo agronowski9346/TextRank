@@ -45,7 +45,7 @@ public class Main {
 		KeywordGraph keywordGraph = new KeywordGraph(text);
 		keywordGraph.drawEdges();
 		keywordGraph.printHashMap();
-		
+		System.out.println(keywordGraph.toString());
 		
 	}
 

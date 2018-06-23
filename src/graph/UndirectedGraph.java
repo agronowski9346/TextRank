@@ -29,4 +29,24 @@ public class UndirectedGraph {
 		//loop through each vertex adjacent to the startVertex and keep going
 		
 	}
+	
+	/*
+	 * Prints out a nicely formatted look of the adjacency matrix
+	 */
+	public String toString() {
+		StringBuilder matrix = new StringBuilder();
+		for(int i = 0; i<this.adjacencyMatrix.length; i++) {
+			//truncate the space depending on the digits so higher digit numbers don't push the output over
+			if(i<=9) matrix.append("Index: " + i + "      ");
+			else if(i<=10) matrix.append("Index: " + i + "     ");
+			else {
+				matrix.append("Index: " + i + "     ");
+			}
+			for(int j = 0; j<this.adjacencyMatrix[i].length; j++) {
+				matrix.append(this.adjacencyMatrix[i][j]);
+			}
+			matrix.append("\n");
+		}
+		return matrix.toString();
+	}
 }
