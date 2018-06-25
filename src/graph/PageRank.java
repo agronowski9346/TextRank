@@ -20,6 +20,8 @@ public class PageRank {
 		 * calculates the summation of all the Vertices "j" which point to the 
 		 * current vertex i, which is determined by the adjacency matrix of the graph
 		 */
-		for (int jContainedInCurrentVertex; jContaiedInCurrentVertex<this.graph.)
+		for (int adjVertex; adjVertex<this.graph.adjacencyMatrix[vertex].length; adjVertex++) {
+			adjacencyMatrix[vertex][adjVertex]
+		}
 	}
 }
