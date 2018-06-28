@@ -1,15 +1,15 @@
 package graph;
 
 public class Vertex {
-	private int score = 1;
+	private double score = 1;
 	private String value;
 	public Vertex(String value) {
 		this.value = value;
 	}
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
-	public void setScore(int score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 	public String getText() {

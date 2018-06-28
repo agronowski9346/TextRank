@@ -2,6 +2,7 @@ package graph;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 /*
  * Class represents a generic undirected graph using an adjacency matrix
@@ -12,22 +13,19 @@ public class UndirectedGraph {
 	protected HashMap<Vertex, Integer> vertices = new HashMap<Vertex, Integer>();;
 	
 	//adds an edge between two vertices
-	public void addEdge(int to, int from) {
+	protected void addEdge(int to, int from) {
 		adjacencyMatrix[to][from] = 1;
 		adjacencyMatrix[from][to] = 1;
 	}
 	
-	//Performs a BreadthFirstSearch on the graph starting from a position in the matrix
-	public void breadthFirstSearch(int startVertex) {
-		//LinkedList<T> queue = new LinkedList<T>();
-		int sizeOfAdjacencyList = this.adjacencyMatrix.length;
-		boolean[] visitedVertices= new boolean[sizeOfAdjacencyList];
-	//	queue.offer(this.adjacencyMatrix[positionX][positionY]);
-		visitedVertices[startVertex] = true;
-		
-		//System.out.println(vertices.get(queue.poll()));
-		//loop through each vertex adjacent to the startVertex and keep going
-		
+	/*
+	 * Reverses the lookup of the hashmap to get a certain vertex at its int position
+	 */
+	Vertex reverseVertex(int vertex) {
+		for (Entry<Vertex, Integer> entry : this.vertices.entrySet()) {
+			if(entry.getValue() == vertex) return entry.getKey();
+		}
+		return null;
 	}
 	
 	/*

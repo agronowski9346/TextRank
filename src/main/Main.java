@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import graph.KeywordGraph;
+import graph.PageRank;
 import graph.UndirectedGraph;
 import process.ProcessText;
 
@@ -46,7 +47,8 @@ public class Main {
 		keywordGraph.drawEdges();
 		keywordGraph.printHashMap();
 		System.out.println(keywordGraph.toString());
-		
+		PageRank pr = new PageRank(keywordGraph);
+		System.out.println(pr.score(0));
 	}
 
 }
