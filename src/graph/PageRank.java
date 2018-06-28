@@ -35,7 +35,6 @@ public final class PageRank {
 				for (Entry<Vertex, Integer> entry : this.graph.vertices.entrySet()) {
 			        if (adjVertex == entry.getValue()) {
 			        	summation += entry.getKey().getScore() * (1.0/countOutDegree(entry.getValue()));
-			        	System.out.println(entry.getValue());
 			        	break;
 			        }
 			    }
@@ -50,17 +49,22 @@ public final class PageRank {
 	public boolean converge() {
 		boolean converge = false;
 		double currentScore;
+		for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
+			currentScore = this.score(i);
+			pastIterationScores.put(i, currentScore);
+			}
 		while(!converge) {
 			for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
 				currentScore = this.score(i);
-				if(i!=0) {
-					
-				}
-				currentScore = this.score(i);
+				System.out.println("node " + i +" has score: " +currentScore);
+				if(currentScore - pastIterationScores.get(i) < this.convergenceThreshold)  return true;
 				pastIterationScores.put(i, currentScore);
-			}
+				}
+				
+			}	
+		return true;
 		}
-	}
+	
 	/*
 	 * Counts the out degree of a vertex
 	 */

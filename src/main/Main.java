@@ -45,10 +45,11 @@ public class Main {
 		ProcessText text = new ProcessText(fileContents.toString());
 		KeywordGraph keywordGraph = new KeywordGraph(text);
 		keywordGraph.drawEdges();
-		keywordGraph.printHashMap();
 		System.out.println(keywordGraph.toString());
 		PageRank pr = new PageRank(keywordGraph);
-		System.out.println(pr.score(0));
+		pr.converge();
+		keywordGraph.printHashMap();
+		
 	}
 
 }

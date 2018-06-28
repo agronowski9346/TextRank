@@ -53,7 +53,7 @@ public class KeywordGraph extends UndirectedGraph {
 	
 	public void printHashMap() {
 		for(Map.Entry<Vertex, Integer> m: vertices.entrySet()) {
-			System.out.println("Node: " + m.getKey().getText() + " has value: " + m.getValue());
+			System.out.println("Node: " + m.getKey().getText() + " has value graph value: " + m.getValue() + " and score value " + m.getKey().getScore());
 		}
 	}
 	
