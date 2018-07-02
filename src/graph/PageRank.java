@@ -34,7 +34,7 @@ public final class PageRank {
 			if(this.graph.adjacencyMatrix[vertex][adjVertex] == 1) {
 				for (Entry<Vertex, Integer> entry : this.graph.vertices.entrySet()) {
 			        if (adjVertex == entry.getValue()) {
-			        	summation += entry.getKey().getScore() * (1.0/countOutDegree(entry.getValue()));
+			        	summation += entry.getKey().getScore() * (1.0/this.countOutDegree(entry.getValue()));
 			        	break;
 			        }
 			    }
@@ -49,19 +49,34 @@ public final class PageRank {
 	public boolean converge() {
 		boolean converge = false;
 		double currentScore;
+		//TESTING
+		
+		//for(int j = 0; j<15; j++) {
 		for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
 			currentScore = this.score(i);
+			//System.out.println("node: " + i + " has score " + currentScore + " at iteration " + j);
 			pastIterationScores.put(i, currentScore);
 			}
+		//}
+		
+		//TODO error: WE COMPUTE THE CONVERGENCE BY USING THE SCORES OF SUCCESSFUL ITERATIONS, not the current
+		//The must be two maps one for the first iteration and another one for the second
+		int count = 0;
 		while(!converge) {
 			for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
 				currentScore = this.score(i);
-				System.out.println("node " + i +" has score: " +currentScore);
-				if(currentScore - pastIterationScores.get(i) < this.convergenceThreshold)  return true;
+				count++;
+				//System.out.println("node " + i +" has score: " +currentScore);
+				if(currentScore - pastIterationScores.get(i) < this.convergenceThreshold) {
+					System.out.println("we lopped throught " + count + " iterations");
+					return true;
+				}
 				pastIterationScores.put(i, currentScore);
+				
 				}
 				
 			}	
+			
 		return true;
 		}
 	

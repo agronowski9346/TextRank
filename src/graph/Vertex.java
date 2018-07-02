@@ -1,7 +1,7 @@
 package graph;
 
 public class Vertex {
-	private double score = 1;
+	private double score = .1;
 	private String value;
 	public Vertex(String value) {
 		this.value = value;
