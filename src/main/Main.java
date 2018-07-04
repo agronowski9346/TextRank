@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import graph.KeywordGraph;
 import graph.PageRank;
+import graph.SentenceGraph;
 import graph.UndirectedGraph;
 import process.ProcessText;
 
@@ -43,13 +44,15 @@ public class Main {
             ex.printStackTrace();
         }
 		ProcessText text = new ProcessText(fileContents.toString());
-		KeywordGraph keywordGraph = new KeywordGraph(text);
-		keywordGraph.drawEdges();
-		System.out.println(keywordGraph.toString());
-		PageRank pr = new PageRank(keywordGraph);
-		pr.converge();
-		keywordGraph.printHashMap();
-		
+		//KeywordGraph keywordGraph = new KeywordGraph(text);
+		//keywordGraph.drawEdges();
+		//System.out.println(keywordGraph.toString());
+		//PageRank pr = new PageRank(keywordGraph);
+		//pr.converge();
+		//keywordGraph.printHashMap();
+		SentenceGraph sentenceGraph = new SentenceGraph(text);
+		sentenceGraph.drawEdges();
+		System.out.println(sentenceGraph);
 	}
 
 }
