@@ -14,10 +14,8 @@ public class SentenceGraph extends UndirectedGraph {
 		super();
 		this.text = text;
 		this.sentences = this.text.getFileContents().split("\\.");
-		int graphSize = this.sentences.length;
-		System.out.println(graphSize);
+		int graphSize = this.sentences.length - 1;
 		this.adjacencyMatrix = new Double[graphSize][graphSize];
-		// TODO Auto-generated constructor stub
 	}
 	
 	protected void addEdge(int to, int from, double weight) {
@@ -49,9 +47,10 @@ public class SentenceGraph extends UndirectedGraph {
 		//represent the sentences words
 		String[] current = null;
 		String[] other = null;
+		//loops through sentences and compares them to the next sentences and comparing all of their respective words
 		for(int currentSentence = 0; currentSentence < this.sentences.length; currentSentence++) {
 			current = this.sentences[currentSentence].split("\\s+");
-			for(int examineSentences = currentSentence + 1; examineSentences< this.sentences.length; examineSentences++) {
+			for(int examineSentences = currentSentence + 1; examineSentences< this.sentences.length-1; examineSentences++) {
 				other = this.sentences[examineSentences].split("\\s+");
 				for(int currentSentenceWord = 0; currentSentenceWord<current.length; currentSentenceWord++) {
 					lengthOfSentence1 = this.sentences[currentSentence].length();
@@ -77,7 +76,7 @@ public class SentenceGraph extends UndirectedGraph {
 	}
 	
 	public String toString() {
-		StringBuilder matrix = new StringBuilder();
+		StringBuilder matrix = new StringBuilder();    
 		for(int i = 0; i<this.adjacencyMatrix.length; i++) {
 			//truncate the space depending on the digits so higher digit numbers don't push the output over
 			if(i<=9) matrix.append("Index: " + i + "      ");
@@ -86,7 +85,10 @@ public class SentenceGraph extends UndirectedGraph {
 				matrix.append("Index: " + i + "     ");
 			}
 			for(int j = 0; j<this.adjacencyMatrix[i].length; j++) {
-				matrix.append(this.adjacencyMatrix[i][j]);
+				if(this.adjacencyMatrix[i][j] != null)
+				matrix.append(String.format("%.1f", this.adjacencyMatrix[i][j]) + " ");
+				else
+				matrix.append("NA "); //represents null
 			}
 			matrix.append("\n");
 		}
