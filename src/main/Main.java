@@ -11,6 +11,7 @@ import graph.KeywordGraph;
 import graph.PageRank;
 import graph.SentenceGraph;
 import graph.UndirectedGraph;
+import graph.WeightedPageRank;
 import process.ProcessText;
 
 public class Main {
@@ -53,6 +54,10 @@ public class Main {
 		SentenceGraph sentenceGraph = new SentenceGraph(text);
 		sentenceGraph.drawEdges();
 		System.out.println(sentenceGraph);
+		WeightedPageRank wp = new WeightedPageRank(sentenceGraph);
+		//wp.test(sentenceGraph);
+		//wp.score(2);
+		wp.converge();
 	}
 
 }

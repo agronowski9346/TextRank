@@ -1,30 +1,16 @@
 package graph;
 
-import java.util.HashMap;
 import java.util.Map.Entry;
 
-import graph.UndirectedGraph;
-
-/*
- * applies PageRank on undirected unweighted and weighted graphs.
- */
-public class PageRank {
-	//value of the dampening factor usually set to 0.85
-	protected final double d = 0.85;
-	//value usually set to 0.0001
-	protected final double convergenceThreshold = 0.0001;
-	protected UndirectedGraph graph;
-	//represents 
-	protected HashMap<Integer, Double> pastIterationScores = new HashMap<Integer, Double>();
-	public PageRank(UndirectedGraph graph) {
+public class WeightedPageRank extends PageRank {
+	private SentenceGraph graph;
+	public WeightedPageRank(SentenceGraph graph) {
+		super();
 		this.graph = graph;
+		// TODO Auto-generated constructor stub
 	}
-	public PageRank() {
-		
-	}
-	/*
-	 * sets and returns the score at a given vertex after PageRank has been applied on it
-	 */
+	
+	@Override
 	public double score(int vertex) {
 		double summation = 0;
 		double scoreAtVertex;
@@ -34,10 +20,12 @@ public class PageRank {
 		 * current vertex i, which is determined by the adjacency matrix of the graph
 		 */
 		for (int adjVertex = 0; adjVertex<this.graph.adjacencyMatrix[vertex].length; adjVertex++) {
-			if(this.graph.adjacencyMatrix[vertex][adjVertex] == 1) {
+			//if there is an edge between nodes
+			if(this.graph.adjacencyMatrix[vertex][adjVertex] != null && this.graph.adjacencyMatrix[vertex][adjVertex] != 0) {
 				for (Entry<Vertex, Integer> entry : this.graph.vertices.entrySet()) {
 			        if (adjVertex == entry.getValue()) {
-			        	summation += entry.getKey().getScore() * (1.0/this.countOutDegree(entry.getValue()));
+		//	        	summation += entry.getKey().getScore() * (1.0/this.countOutDegree(entry.getValue()));
+			        	summation += entry.getKey().getScore() * ((this.graph.adjacencyMatrix[entry.getValue()][vertex])/sumOutEdgeVertexWeights(entry.getValue()));
 			        	break;
 			        }
 			    }
@@ -46,9 +34,26 @@ public class PageRank {
 		currentVertex.setScore(((1-d)+(d*summation)));
 		return currentVertex.getScore();
 	}
+	
 	/*
-	 * iterates PageRank's scoring algorithm until convergence
+	 * sums the weights of a vertex out edges
+	 * For example: sumOutEdgeVertexWeights(2) would sum the outedges of vertex 2 (we call j) whose outedges are represented by k
+	 * and whose weights are represented by Weight[j][k]
 	 */
+	private double sumOutEdgeVertexWeights(int j) {
+		double weightSum = 0;
+		for(int k = 0; k<this.graph.adjacencyMatrix.length; k++) {
+			if(this.graph.adjacencyMatrix[j][k] != null && this.graph.adjacencyMatrix[j][k] != 0) {
+				weightSum += this.graph.adjacencyMatrix[j][k];
+			}
+		}
+		return weightSum;
+	}
+	
+	public void test(SentenceGraph s) {
+		System.out.println(s.adjacencyMatrix);
+	}
+	
 	public boolean converge() {
 		boolean converge = false;
 		double currentScore;
@@ -83,14 +88,6 @@ public class PageRank {
 		return true;
 		}
 	
-	/*
-	 * Counts the out degree of a vertex
-	 */
-	private int countOutDegree(int vertex) {
-		int count = 0;
-		for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
-			if(this.graph.adjacencyMatrix[vertex][i] == 1) count++;
-		}
-		return count;
 	}
-}
+
+

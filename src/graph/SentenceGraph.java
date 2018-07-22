@@ -23,6 +23,11 @@ public class SentenceGraph extends UndirectedGraph {
 		this.adjacencyMatrix[from][to] = weight;
 	}
 	
+	//returns the current weight at a vertex
+	protected double getWeight(int vertex1, int vertex2) {
+		return this.adjacencyMatrix[vertex1][vertex2];
+	}
+	
 	private void createVertices() {
 		for(int i = 0; i<this.sentences.length; i++) {
 			this.vertices.put(new Vertex(this.sentences[i]), i);
