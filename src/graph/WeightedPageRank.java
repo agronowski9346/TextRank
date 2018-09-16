@@ -13,6 +13,11 @@ public class WeightedPageRank extends PageRank {
 	public double score(int vertex) {
 		double summation = 0;
 		Vertex currentVertex = this.graph.reverseVertex(vertex);
+		//necessary to handle String in the form of 5 p.m. since the currentVertex will be null
+		if(currentVertex == null) {
+			this.graph.vertices.remove(currentVertex);
+			return -1;
+		}
 		/*
 		 * calculates the summation of all the Vertices "j" which point to the 
 		 * current vertex i, which is determined by the adjacency matrix of the graph
