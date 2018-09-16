@@ -14,7 +14,7 @@ public class PageRank {
 	//value usually set to 0.0001
 	protected final double convergenceThreshold = 0.0001;
 	protected UndirectedGraph graph;
-	//represents 
+	//represents pastiterations of PageRank
 	protected HashMap<Integer, Double> pastIterationScores = new HashMap<Integer, Double>();
 	public PageRank(UndirectedGraph graph) {
 		this.graph = graph;
@@ -27,7 +27,6 @@ public class PageRank {
 	 */
 	public double score(int vertex) {
 		double summation = 0;
-		double scoreAtVertex;
 		Vertex currentVertex = this.graph.reverseVertex(vertex);
 		/*
 		 * calculates the summation of all the Vertices "j" which point to the 
@@ -52,26 +51,15 @@ public class PageRank {
 	public boolean converge() {
 		boolean converge = false;
 		double currentScore;
-		//TESTING
-		
-		//for(int j = 0; j<15; j++) {
-		for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
-			currentScore = this.score(i);
-			//System.out.println("node: " + i + " has score " + currentScore + " at iteration " + j);
-			pastIterationScores.put(i, currentScore);
-			}
-		//}
 		
 		//TODO error: WE COMPUTE THE CONVERGENCE BY USING THE SCORES OF SUCCESSFUL ITERATIONS, not the current
 		//The must be two maps one for the first iteration and another one for the second
-		int count = 0;
+		
 		while(!converge) {
 			for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
 				currentScore = this.score(i);
-				count++;
 				//System.out.println("node " + i +" has score: " +currentScore);
-				if(currentScore - pastIterationScores.get(i) < this.convergenceThreshold) {
-					System.out.println("we lopped throught " + count + " iterations");
+				if((pastIterationScores.containsKey(i)) && (currentScore - pastIterationScores.get(i) < this.convergenceThreshold)) {
 					return true;
 				}
 				pastIterationScores.put(i, currentScore);

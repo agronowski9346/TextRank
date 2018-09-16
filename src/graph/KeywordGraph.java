@@ -17,6 +17,8 @@ public class KeywordGraph extends UndirectedGraph {
 	public KeywordGraph(ProcessText text) {
 		super();
 		this.text = text;
+		//Put the valid syntactic filters for TextRank(only nouns and adjectives)
+				// using Open NLP's part of speech codes
 		syntacticFilter.add("JJ");
 		syntacticFilter.add("JJR");
 		syntacticFilter.add("JJS");
@@ -26,10 +28,6 @@ public class KeywordGraph extends UndirectedGraph {
 		syntacticFilter.add("NNPS");
 		int graphSize = this.createVertices();
 		this.adjacencyMatrix = new int[graphSize][graphSize];
-		//Put the valid syntactic filters for TextRank(only nouns and adjectives)
-		// using Open NLP's part of speech codes
-	
-		
 	}
 	/*
 	 * Create all of the vertices to be added to 
@@ -82,14 +80,11 @@ public class KeywordGraph extends UndirectedGraph {
 						outer = new Vertex(wordsToBeConnected.get(j));
 						//check if they are the same word to avoid loops
 						if(!(inner.getText().equals(outer.getText()))) {
-							System.out.println("Drawing an edge from " + this.vertices.get(inner) + " to " + this.vertices.get(outer));
-							System.out.println(" or in word terms we draw an edge from " + wordsToBeConnected.get(i) + " to " + wordsToBeConnected.get(j));
 							this.addEdge(this.vertices.get(inner), this.vertices.get(outer));
 						}
 					}
 				}
 			}
-			System.out.println("next...");
 			wordsToBeConnected.clear();
 		}
 		

@@ -7,25 +7,23 @@ public class WeightedPageRank extends PageRank {
 	public WeightedPageRank(SentenceGraph graph) {
 		super();
 		this.graph = graph;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public double score(int vertex) {
 		double summation = 0;
-		double scoreAtVertex;
 		Vertex currentVertex = this.graph.reverseVertex(vertex);
 		/*
 		 * calculates the summation of all the Vertices "j" which point to the 
 		 * current vertex i, which is determined by the adjacency matrix of the graph
 		 */
+		//this for loop represents the vertex of the weights we want to calculate
 		for (int adjVertex = 0; adjVertex<this.graph.adjacencyMatrix[vertex].length; adjVertex++) {
-			//if there is an edge between nodes
+			//if there is an edge between the vertex we want to calculate and its adjacent vertex
 			if(this.graph.adjacencyMatrix[vertex][adjVertex] != null && this.graph.adjacencyMatrix[vertex][adjVertex] != 0) {
 				for (Entry<Vertex, Integer> entry : this.graph.vertices.entrySet()) {
 			        if (adjVertex == entry.getValue()) {
-		//	        	summation += entry.getKey().getScore() * (1.0/this.countOutDegree(entry.getValue()));
-			        	summation += entry.getKey().getScore() * ((this.graph.adjacencyMatrix[entry.getValue()][vertex])/sumOutEdgeVertexWeights(entry.getValue()));
+			        	summation += (entry.getKey().getScore()) * ((this.graph.adjacencyMatrix[entry.getValue()][vertex])/sumOutEdgeVertexWeights(entry.getValue()));
 			        	break;
 			        }
 			    }
@@ -57,15 +55,6 @@ public class WeightedPageRank extends PageRank {
 	public boolean converge() {
 		boolean converge = false;
 		double currentScore;
-		//TESTING
-		
-		//for(int j = 0; j<15; j++) {
-		for(int i = 0; i<this.graph.adjacencyMatrix.length; i++) {
-			currentScore = this.score(i);
-			//System.out.println("node: " + i + " has score " + currentScore + " at iteration " + j);
-			pastIterationScores.put(i, currentScore);
-			}
-		//}
 		
 		//TODO error: WE COMPUTE THE CONVERGENCE BY USING THE SCORES OF SUCCESSFUL ITERATIONS, not the current
 		//The must be two maps one for the first iteration and another one for the second
@@ -75,8 +64,8 @@ public class WeightedPageRank extends PageRank {
 				currentScore = this.score(i);
 				count++;
 				//System.out.println("node " + i +" has score: " +currentScore);
-				if(currentScore - pastIterationScores.get(i) < this.convergenceThreshold) {
-					System.out.println("we lopped throught " + count + " iterations");
+				if((pastIterationScores.containsKey(i)) && (currentScore - pastIterationScores.get(i) < this.convergenceThreshold)) {
+					//System.out.println("we lopped throught " + count + " iterations");
 					return true;
 				}
 				pastIterationScores.put(i, currentScore);

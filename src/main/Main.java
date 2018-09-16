@@ -1,24 +1,18 @@
 package main;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
-
 import graph.KeywordGraph;
 import graph.PageRank;
 import graph.SentenceGraph;
-import graph.UndirectedGraph;
+import graph.TextRank;
 import graph.WeightedPageRank;
 import process.ProcessText;
-
+import Exceptions.InvalidSecondArgumentException;
 public class Main {
 
 	public static void main(String[] args) {
 		File inputFile = new File(args[0]);
-		BufferedReader br = null;
 		StringBuilder fileContents = new StringBuilder();
 		Scanner readFile = null;
 		
@@ -45,19 +39,32 @@ public class Main {
             ex.printStackTrace();
         }
 		ProcessText text = new ProcessText(fileContents.toString());
-		//KeywordGraph keywordGraph = new KeywordGraph(text);
-		//keywordGraph.drawEdges();
-		//System.out.println(keywordGraph.toString());
-		//PageRank pr = new PageRank(keywordGraph);
-		//pr.converge();
-		//keywordGraph.printHashMap();
+		
+		KeywordGraph keywordGraph = new KeywordGraph(text);
+		keywordGraph.drawEdges();
+		
+		PageRank pr = new PageRank(keywordGraph);
+		pr.converge();
+		
 		SentenceGraph sentenceGraph = new SentenceGraph(text);
 		sentenceGraph.drawEdges();
-		System.out.println(sentenceGraph);
+		
 		WeightedPageRank wp = new WeightedPageRank(sentenceGraph);
-		//wp.test(sentenceGraph);
-		//wp.score(2);
 		wp.converge();
+		
+		TextRank output = new TextRank();
+		int flag = Integer.parseInt(args[2]);
+		if(args[1].equals("k")) {
+			if(flag > 1) throw new InvalidSecondArgumentException("Only 0 and 1 are valid arguments for this flag");
+			output.getKeywords(keywordGraph, flag);
+		}
+		else if(args[1].equals("s")) {
+			if(flag > 2) throw new InvalidSecondArgumentException("Only 0, 1, and 2 are valid arguments for this flag");
+			output.getSentences(sentenceGraph, flag);
+		}
+		else {
+			throw new InvalidSecondArgumentException("The only valid second argument is \"k\" or \"s\"");
+		}
 	}
 
 }

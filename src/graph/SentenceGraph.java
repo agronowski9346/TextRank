@@ -1,5 +1,7 @@
 package graph;
 
+import java.util.Map;
+
 import process.ProcessText;
 
 /*
@@ -63,13 +65,11 @@ public class SentenceGraph extends UndirectedGraph {
 						if(current[currentSentenceWord].equals(other[examineSentencesWord])) {
 							countSimilarTokens++;
 						}
-						System.out.println("text of current " + current[currentSentenceWord]);
-						System.out.println("text of other " + other[examineSentencesWord]);
+						
 						lengthOfSentence2 = this.sentences[examineSentences].length();
 					}
 				}
-				System.out.println("index that currentSentence refers to is " + currentSentence);
-				System.out.println("index that currentSentence refers to is " + examineSentences);
+				
 				this.addEdge(currentSentence, examineSentences, this.similarityScore(countSimilarTokens, lengthOfSentence1, lengthOfSentence2));
 				countSimilarTokens = 0;
 				lengthOfSentence1 = 0;
@@ -98,5 +98,11 @@ public class SentenceGraph extends UndirectedGraph {
 			matrix.append("\n");
 		}
 		return matrix.toString();
+	}
+	
+	public void printHashMap() {
+		for(Map.Entry<Vertex, Integer> m: vertices.entrySet()) {
+			System.out.println("Node: " + m.getKey().getText() + " has value graph value: " + m.getValue() + " and score value " + m.getKey().getScore());
+		}
 	}
 }
