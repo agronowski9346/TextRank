@@ -20,7 +20,7 @@ flag of 0 prints all the sentences with their scores printed next to them
 flag of 1 prints all the sentences without their scores printed next to them
 flag of 2 prints the top 100 words
 
-Full Example:
+Full Example in Eclipse: C:\Users\p\Desktop\text\text.txt k 1
 
 
 
